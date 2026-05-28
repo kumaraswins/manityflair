@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mr C — Dress Better. Buy Better.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --parchment: #ede8df;
+      --ink: #1a1714;
+      --ink-soft: #3d3830;
+      --warm-mid: #8c7b6b;
+      --accent: #6b3a2a;
+      --gold: #b89c6e;
+      --border: rgba(26,23,20,0.12);
+      --ff-serif: 'Cormorant Garamond', Georgia, serif;
+      --ff-sans: 'Jost', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--ff-sans);
+      font-weight: 300;
+      font-size: 15px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.5rem 4rem;
+      background: rgba(245,240,232,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--ff-serif);
+      font-size: 1.5rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex; gap: 2.5rem; list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--ff-sans);
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      text-decoration: none;
+      transition: color 0.25s;
+      padding-bottom: 2px;
+      border-bottom: 1px solid transparent;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    .nav-links a.nav-active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .nav-insta {
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--warm-mid);
+      text-decoration: none;
+      border-bottom: 1px solid var(--gold);
+      padding-bottom: 1px;
+      transition: color 0.25s;
+    }
+    .nav-insta:hover { color: var(--accent); }
+
+    /* ── HAMBURGER ── */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      z-index: 201;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--ink);
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* ── MOBILE DRAWER ── */
+    .nav-drawer {
+      position: fixed;
+      inset: 0;
+      background: rgba(245,240,232,0.98);
+      backdrop-filter: blur(16px);
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    .nav-drawer.open { transform: translateX(0); }
+
+    .nav-drawer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2.5rem;
+    }
+    .nav-drawer-links a {
+      font-family: var(--ff-serif);
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: var(--ink);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .nav-drawer-links a:hover { color: var(--accent); }
+
+    .nav-drawer-insta {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--warm-mid);
+      text-decoration: none;
+      border-bottom: 1px solid var(--gold);
+      padding-bottom: 2px;
+      transition: color 0.25s;
+    }
+    .nav-drawer-insta:hover { color: var(--accent); }
+
+    .nav-drawer-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--ink-soft);
+      padding: 0.5rem;
+      line-height: 1;
+      font-size: 1.5rem;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100svh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 80px;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 5rem 8rem 8rem;
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+
+    .hero-title {
+      font-family: var(--ff-serif);
+      font-size: clamp(3.2rem, 5vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin-bottom: 2.2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.4s forwards;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 0.9rem;
+      color: var(--ink-soft);
+      max-width: 38ch;
+      line-height: 1.8;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.6s forwards;
+      margin-bottom: 3rem;
+    }
+
+    .hero-ctas {
+      display: flex; gap: 1.5rem; align-items: center;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.8s forwards;
+    }
+
+    .btn-primary {
+      background: var(--ink);
+      color: var(--cream);
+      font-family: var(--ff-sans);
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.9rem 2.2rem;
+      text-decoration: none;
+      transition: background 0.3s, color 0.3s;
+    }
+    .btn-primary:hover { background: var(--accent); }
+
+    .btn-ghost {
+      font-family: var(--ff-sans);
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+      transition: color 0.25s, border-color 0.25s;
+    }
+    .btn-ghost:hover { color: var(--accent); border-color: var(--accent); }
+
+    .hero-right {
+      position: relative;
+      background: var(--parchment);
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeIn 1s 0.5s forwards;
+      will-change: transform;
+    }
+
+    .hero-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    .hero-tag {
+      position: absolute;
+      bottom: 3rem; left: -1.5rem;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      padding: 1rem 1.4rem;
+      font-family: var(--ff-serif);
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--ink-soft);
+      box-shadow: 0 4px 24px rgba(26,23,20,0.06);
+    }
+
+    /* ── SKELETON SHIMMER ── */
+    @keyframes shimmer {
+      0%   { background-position: -200% center; }
+      100% { background-position:  200% center; }
+    }
+
+    .skeleton-shimmer {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        90deg,
+        var(--parchment) 25%,
+        rgba(255,255,255,0.5) 50%,
+        var(--parchment) 75%
+      );
+      background-size: 200% 100%;
+      animation: shimmer 1.8s ease-in-out infinite;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    /* ── MANIFESTO ── */
+    .manifesto {
+      padding: 7rem 8rem;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    .manifesto-label {
+      font-size: 0.62rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      padding-top: 0.4rem;
+    }
+
+    .manifesto-body {
+      font-family: var(--ff-serif);
+      font-size: clamp(1.3rem, 2.2vw, 1.9rem);
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--ink);
+    }
+
+    .manifesto-body em { font-style: italic; color: var(--accent); }
+
+    /* ── PILLARS ── */
+    .pillars {
+      background: var(--parchment);
+      padding: 6rem 8rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+    }
+
+    .pillar {
+      padding: 2.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .pillar-num {
+      font-family: var(--ff-serif);
+      font-size: 3.5rem;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .pillar-title {
+      font-family: var(--ff-serif);
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 0.75rem;
+    }
+
+    .pillar-desc {
+      font-size: 0.83rem;
+      color: var(--ink-soft);
+      line-height: 1.75;
+    }
+
+    /* ── PRODUCTS ── */
+    .products {
+      padding: 7rem 8rem;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 3.5rem;
+      padding-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .section-header::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0;
+      border-bottom: 1px solid var(--border);
+      transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
+    }
+    .section-header.visible::after { width: 100%; }
+
+    .section-title {
+      font-family: var(--ff-serif);
+      font-size: clamp(2rem, 3vw, 3rem);
+      font-weight: 300;
+      line-height: 1.2;
+    }
+
+    .section-link {
+      font-size: 0.67rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--warm-mid);
+      text-decoration: none;
+      border-bottom: 1px solid var(--gold);
+      padding-bottom: 2px;
+      transition: color 0.25s;
+    }
+    .section-link:hover { color: var(--accent); }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+    }
+
+    .product-card {
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .product-card:hover { transform: translateY(-4px); }
+    .product-card:hover .product-img { box-shadow: 0 12px 40px rgba(26,23,20,0.1); }
+
+    .product-img {
+      aspect-ratio: 3/4;
+      background: var(--parchment);
+      margin-bottom: 1.2rem;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+
+    .product-img img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    .product-badge {
+      position: absolute; top: 1rem; left: 1rem;
+      font-size: 0.58rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: var(--accent);
+      color: var(--cream);
+      padding: 0.3rem 0.6rem;
+      z-index: 2;
+    }
+
+    .product-name {
+      font-family: var(--ff-serif);
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 0.3rem;
+    }
+
+    .product-detail {
+      font-size: 0.75rem;
+      color: var(--ink-soft);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── REELS HUB ── */
+    .reels {
+      background: var(--parchment);
+      padding: 7rem 8rem;
+    }
+
+    .reels-intro {
+      max-width: 55ch;
+      font-size: 0.85rem;
+      color: var(--ink-soft);
+      margin-top: 1rem;
+      margin-bottom: 3.5rem;
+      line-height: 1.8;
+    }
+
+    .reels-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .reel-card {
+      overflow: hidden;
+      background: var(--ink);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .reel-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(26,23,20,0.18); }
+
+    .reel-embed {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 9/16;
+      background: #000;
+    }
+    .reel-embed iframe {
+      position: absolute;
+      /* shift up to hide Instagram's top chrome (~70px header) */
+      top: -70px;
+      left: 0;
+      width: 100%;
+      /* container height + top chrome + bottom chrome (~200px actions/likes) */
+      height: calc(100% + 270px);
+      border: none;
+    }
+
+    .reel-caption {
+      padding: 0.8rem 1rem 1rem;
+      background: var(--ink);
+    }
+
+    .reel-tag {
+      font-size: 0.55rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    .reel-title {
+      font-family: var(--ff-serif);
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 1.35;
+    }
+
+    .reels-more {
+      margin-top: 3rem;
+      text-align: center;
+    }
+
+    /* ── QUOTE ── */
+    .quote-section {
+      padding: 7rem 8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .quote-section::before, .quote-section::after {
+      content: '';
+      position: absolute;
+      left: 8rem; right: 8rem;
+      border-top: 1px solid var(--border);
+    }
+    .quote-section::before { top: 0; }
+    .quote-section::after { bottom: 0; }
+
+    .quote-mark {
+      font-family: var(--ff-serif);
+      font-size: 5rem;
+      line-height: 0.5;
+      color: var(--gold);
+      opacity: 0.4;
+      display: block;
+      margin-bottom: 1.5rem;
+    }
+
+    .quote-text {
+      font-family: var(--ff-serif);
+      font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--ink);
+      max-width: 22ch;
+      line-height: 1.4;
+      margin-bottom: 1.5rem;
+    }
+
+    .quote-attr {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      color: rgba(245,240,232,0.6);
+      padding: 4rem 8rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .footer-brand {
+      font-family: var(--ff-serif);
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--cream);
+      margin-bottom: 0.75rem;
+    }
+    .footer-brand span { color: var(--gold); }
+
+    .footer-tagline {
+      font-size: 0.75rem;
+      line-height: 1.7;
+    }
+
+    .footer-col-title {
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .footer-links a {
+      font-size: 0.8rem;
+      color: rgba(245,240,232,0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--cream); }
+
+    .footer-bottom {
+      background: var(--ink);
+      border-top: 1px solid rgba(245,240,232,0.08);
+      padding: 1.5rem 8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-bottom p {
+      font-size: 0.65rem;
+      color: rgba(245,240,232,0.3);
+      letter-spacing: 0.1em;
+    }
+
+    /* ── BACK TO TOP ── */
+    .back-to-top {
+      position: fixed;
+      bottom: 2.5rem;
+      right: 2.5rem;
+      z-index: 50;
+      width: 44px; height: 44px;
+      background: var(--ink);
+      color: var(--cream);
+      border: none;
+      border-radius: 50%;
+      font-size: 1.1rem;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, background 0.2s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .back-to-top.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .back-to-top:hover { background: var(--accent); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── FOCUS STATES ── */
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .nav-links a:focus-visible,
+    .nav-insta:focus-visible,
+    .section-link:focus-visible,
+    .btn-ghost:focus-visible {
+      outline: none;
+      border-bottom: 2px solid var(--accent);
+      color: var(--accent);
+    }
+
+    .btn-primary:focus-visible,
+    .nav-toggle:focus-visible,
+    .nav-drawer-close:focus-visible,
+    .back-to-top:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .product-card:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
+    }
+
+    /* ── TABLET LANDSCAPE (901px – 1200px) ── */
+    @media (min-width: 901px) and (max-width: 1200px) {
+      nav { padding: 1.3rem 2.5rem; }
+      .hero-left { padding: 6rem 3rem 6rem 4rem; }
+      .manifesto { padding: 6rem 4rem; gap: 3rem; }
+      .pillars { padding: 5rem 4rem; gap: 2rem; }
+      .products { padding: 5rem 4rem; }
+      .reels { padding: 5rem 4rem; }
+      .quote-section { padding: 5rem 4rem; }
+      .quote-section::before, .quote-section::after { left: 4rem; right: 4rem; }
+      footer { padding: 3.5rem 4rem; }
+      .footer-bottom { padding: 1.3rem 4rem; }
+    }
+
+    /* ── MOBILE (≤ 900px) ── */
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { padding: 6rem 2rem 3rem; }
+      .hero-right { aspect-ratio: 4/3; }
+      .manifesto { grid-template-columns: 1fr; gap: 1.5rem; padding: 5rem 2rem; }
+      .pillars { grid-template-columns: 1fr; padding: 5rem 2rem; }
+      .products { padding: 5rem 2rem; }
+      .products-grid { grid-template-columns: 1fr 1fr; }
+      .reels { padding: 5rem 2rem; }
+      .reels-grid { grid-template-columns: 1fr 1fr; }
+      .quote-section { padding: 5rem 2rem; }
+      .quote-section::before, .quote-section::after { left: 2rem; right: 2rem; }
+      footer { grid-template-columns: 1fr; padding: 3rem 2rem; }
+      .footer-bottom { padding: 1.2rem 2rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+      .back-to-top { bottom: 1.5rem; right: 1.2rem; }
+    }
+
+    /* ── SMALL MOBILE (≤ 600px) ── */
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.2rem; }
+      .hero-title { font-size: clamp(2.4rem, 8vw, 3.2rem); }
+      .hero-left { padding: 5rem 1.2rem 2.5rem; }
+      .hero-ctas { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .manifesto { padding: 3.5rem 1.2rem; }
+      .manifesto-body { font-size: clamp(1.1rem, 4.5vw, 1.5rem); }
+      .pillars { padding: 3.5rem 1.2rem; gap: 0; }
+      .pillar { padding: 1.8rem 0; }
+      .products { padding: 3.5rem 1.2rem; }
+      .products-grid { grid-template-columns: 1fr; }
+      .reels { padding: 3.5rem 1.2rem; }
+      .reels-grid { grid-template-columns: 1fr; }
+      .quote-section { padding: 3.5rem 1.2rem; }
+      .quote-section::before, .quote-section::after { left: 1.2rem; right: 1.2rem; }
+      footer { padding: 2.5rem 1.2rem; gap: 2rem; }
+      .footer-bottom { padding: 1rem 1.2rem; }
+    }
+
+    /* ── REDUCED MOTION ── */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .hero-eyebrow,
+      .hero-title,
+      .hero-sub,
+      .hero-ctas,
+      .hero-right {
+        opacity: 1;
+        animation: none;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+
+      .skeleton-shimmer { animation: none; }
+
+      .nav-drawer { transition: none; }
+
+      .reel-card:hover,
+      .product-card:hover { transform: none; }
+
+      .section-header::after { transition: none; width: 100%; }
+
+      .nav-links a.nav-active { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Mr <span>C</span></a>
+    <ul class="nav-links">
+      <li><a href="#products" data-section="products">Products</a></li>
+      <li><a href="#reels" data-section="reels">Journal</a></li>
+      <li><a href="#about" data-section="about">About</a></li>
+    </ul>
+    <a href="https://instagram.com/manity_flair" target="_blank" rel="noopener noreferrer" class="nav-insta">@manity_flair</a>
+    <button id="nav-toggle" class="nav-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="nav-drawer">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE DRAWER -->
+  <div id="nav-drawer" class="nav-drawer" aria-hidden="true" role="dialog" aria-label="Navigation menu">
+    <button id="nav-drawer-close" class="nav-drawer-close" aria-label="Close navigation">&#x2715;</button>
+    <ul class="nav-drawer-links">
+      <li><a href="#products">Products</a></li>
+      <li><a href="#reels">Journal</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+    <a href="https://instagram.com/manity_flair" target="_blank" rel="noopener noreferrer" class="nav-drawer-insta">@manity_flair</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Men's Clothing Education</p>
+      <h1 class="hero-title">Buy less.<br>Buy <em>better.</em><br>Know why.</h1>
+      <p class="hero-sub">Mr C exists for the man who wants to understand what he wears — the materials, the construction, the provenance — and invest accordingly.</p>
+      <div class="hero-ctas">
+        <a href="#products" class="btn-primary">Shop the Edit</a>
+        <a href="#reels" class="btn-ghost">Watch the Journal →</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <img src="mrc11.jpg" alt="A man in a well-constructed burgundy jacket — the Mr C standard" class="hero-img" />
+      <div class="hero-tag">
+        "The fabric tells the truth<br>before the tailor does."
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- MANIFESTO -->
+  <section class="manifesto">
+    <span class="manifesto-label reveal">Our Belief</span>
+    <p class="manifesto-body reveal">
+      Most men are taught to look at price tags.<br>
+      Mr C teaches you to read <em>selvage edges,</em> inspect welt construction,
+      and feel the weight of a cloth before anything else.
+      Because a man who knows quality <em>can never be fooled</em> by it.
+    </p>
+  </section>
+
+  <!-- PILLARS -->
+  <section class="pillars">
+    <div class="pillar reveal">
+      <div class="pillar-num">01</div>
+      <h3 class="pillar-title">Material Truth</h3>
+      <p class="pillar-desc">Fabric first. We trace everything back to the fibre — natural, honest, built to age with you.</p>
+    </div>
+    <div class="pillar reveal" style="transition-delay:0.1s">
+      <div class="pillar-num">02</div>
+      <h3 class="pillar-title">Construction Over Trend</h3>
+      <p class="pillar-desc">Goodyear welt. Flat-felled seams. Hand-rolled edges. The details that outlast every season.</p>
+    </div>
+    <div class="pillar reveal" style="transition-delay:0.2s">
+      <div class="pillar-num">03</div>
+      <h3 class="pillar-title">Informed Choice</h3>
+      <p class="pillar-desc">Every piece comes with context. Know what it is, where it's from, and why it was made this way.</p>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section class="products" id="products">
+    <div class="section-header reveal">
+      <h2 class="section-title">The Edit</h2>
+      <a href="#" class="section-link">View all pieces</a>
+    </div>
+
+    <div class="products-grid">
+      <div class="product-card reveal" tabindex="0">
+        <div class="product-img">
+          <div class="product-badge">New</div>
+          <img src="img_1402.jpg" alt="Burgundy Selvedge Bomber" />
+        </div>
+        <div class="product-name">Burgundy Selvedge Bomber</div>
+        <div class="product-detail">14oz Japanese Denim · Sizes 44–60</div>
+      </div>
+      <div class="product-card reveal" style="transition-delay:0.05s" tabindex="0">
+        <div class="product-img">
+          <img src="img_3672_2.jpg" alt="Chore Coat in Moleskin" />
+        </div>
+        <div class="product-name">Chore Coat in Moleskin</div>
+        <div class="product-detail">French Cotton Moleskin · Natural</div>
+      </div>
+      <div class="product-card reveal" style="transition-delay:0.1s" tabindex="0">
+        <div class="product-img">
+          <img src="img_3699.jpg" alt="Oxford Weave Shirt" />
+        </div>
+        <div class="product-name">Oxford Weave Shirt</div>
+        <div class="product-detail">120/2 Egyptian Cotton · RTW</div>
+      </div>
+      <div class="product-card reveal" style="transition-delay:0.15s" tabindex="0">
+        <div class="product-img">
+          <img src="img_3920.jpg" alt="Indigo Selvedge Chino" />
+        </div>
+        <div class="product-name">Indigo Selvedge Chino</div>
+        <div class="product-detail">12oz Cone Mills · Slim Straight</div>
+      </div>
+      <div class="product-card reveal" style="transition-delay:0.2s" tabindex="0">
+        <div class="product-img">
+          <img src="img_4385.jpg" alt="Linen Field Jacket" />
+        </div>
+        <div class="product-name">Linen Field Jacket</div>
+        <div class="product-detail">Irish Linen · Unlined · Natural</div>
+      </div>
+      <div class="product-card reveal" style="transition-delay:0.25s" tabindex="0">
+        <div class="product-img">
+          <img src="img_4513.jpg" alt="Raw Denim Work Jacket" />
+        </div>
+        <div class="product-name">Raw Denim Work Jacket</div>
+        <div class="product-detail">13.5oz Unsanforized · One-wash</div>
+      </div>
+      <div class="product-card reveal" style="transition-delay:0.3s" tabindex="0">
+        <div class="product-img">
+          <img src="img_4631.jpg" alt="Moleskin Trousers" />
+        </div>
+        <div class="product-name">Moleskin Trousers</div>
+        <div class="product-detail">French Moleskin · Mid-Rise · Tapered</div>
+      </div>
+      <div class="product-card reveal" style="transition-delay:0.35s" tabindex="0">
+        <div class="product-img">
+          <img src="img_4644.jpg" alt="Merino Crewneck" />
+        </div>
+        <div class="product-name">Merino Crewneck</div>
+        <div class="product-detail">18-micron Italian Merino · Drop-shoulder</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE -->
+  <section class="quote-section">
+    <div>
+      <span class="quote-mark">"</span>
+      <p class="quote-text">Quality is remembered long after the price is forgotten.</p>
+      <p class="quote-attr">— The Mr C Standard</p>
+    </div>
+  </section>
+
+  <!-- REELS HUB -->
+  <section class="reels" id="reels">
+    <div class="section-header reveal">
+      <h2 class="section-title">The Journal</h2>
+      <a href="https://instagram.com/manityflair" target="_blank" rel="noopener noreferrer" class="section-link">All on Instagram</a>
+    </div>
+    <p class="reels-intro reveal">Short films on how clothing is made, why it matters, and how to spot the difference. Because knowing more changes everything.</p>
+
+    <div class="reels-grid">
+
+      <div class="reel-card reveal">
+        <div class="reel-embed">
+          <iframe src="https://www.instagram.com/reel/DQgbeqNkWAb/embed/" scrolling="no" allowtransparency="true" title="Real vs Fake Leather — The Burn Test"></iframe>
+        </div>
+        <div class="reel-caption">
+          <span class="reel-tag">Material</span>
+          <div class="reel-title">Real vs Fake Leather — The Burn Test</div>
+        </div>
+      </div>
+
+      <div class="reel-card reveal" style="transition-delay:0.06s">
+        <div class="reel-embed">
+          <iframe src="https://www.instagram.com/reel/DQLu_J0EZ6b/embed/" scrolling="no" allowtransparency="true" title="Instagram reel by @manityflair"></iframe>
+        </div>
+        <div class="reel-caption">
+          <span class="reel-tag">Education</span>
+          <div class="reel-title">Menswear Knowledge — A Closer Look</div>
+        </div>
+      </div>
+
+      <div class="reel-card reveal" style="transition-delay:0.12s">
+        <div class="reel-embed">
+          <iframe src="https://www.instagram.com/p/DYwN1NMRGmO/embed/" scrolling="no" allowtransparency="true" title="Burnished Leather Shoes"></iframe>
+        </div>
+        <div class="reel-caption">
+          <span class="reel-tag">Shoes</span>
+          <div class="reel-title">Burnished Leather Shoes</div>
+        </div>
+      </div>
+
+      <div class="reel-card reveal" style="transition-delay:0.18s">
+        <div class="reel-embed">
+          <iframe src="https://www.instagram.com/reel/DYbkmxHRzTg/embed/" scrolling="no" allowtransparency="true" title="Best Budget Denims Under ₹1,000"></iframe>
+        </div>
+        <div class="reel-caption">
+          <span class="reel-tag">Denim</span>
+          <div class="reel-title">Best Budget Denims Under ₹1,000</div>
+        </div>
+      </div>
+
+      <div class="reel-card reveal" style="transition-delay:0.24s">
+        <div class="reel-embed">
+          <iframe src="https://www.instagram.com/reel/DUSBgSwkeaF/embed/" scrolling="no" allowtransparency="true" title="The Levi's Strength Test"></iframe>
+        </div>
+        <div class="reel-caption">
+          <span class="reel-tag">Denim</span>
+          <div class="reel-title">The Levi's Strength Test — Worth Every Year</div>
+        </div>
+      </div>
+
+      <div class="reel-card reveal" style="transition-delay:0.3s">
+        <div class="reel-embed">
+          <iframe src="https://www.instagram.com/reel/DSRqH4gEW9p/embed/" scrolling="no" allowtransparency="true" title="Pockets in a Trouser"></iframe>
+        </div>
+        <div class="reel-caption">
+          <span class="reel-tag">Construction</span>
+          <div class="reel-title">Pockets in a Trouser — What to Look For</div>
+        </div>
+      </div>
+
+      <div class="reel-card reveal" style="transition-delay:0.36s">
+        <div class="reel-embed">
+          <iframe src="https://www.instagram.com/reel/DRtnEJ5kcEQ/embed/" scrolling="no" allowtransparency="true" title="How to Clean Suede Shoes"></iframe>
+        </div>
+        <div class="reel-caption">
+          <span class="reel-tag">Shoes</span>
+          <div class="reel-title">How to Clean Suede Shoes</div>
+        </div>
+      </div>
+
+      <div class="reel-card reveal" style="transition-delay:0.42s">
+        <div class="reel-embed">
+          <iframe src="https://www.instagram.com/reel/DRhwTg0k0dK/embed/" scrolling="no" allowtransparency="true" title="Levi's — Does Country of Origin Matter?"></iframe>
+        </div>
+        <div class="reel-caption">
+          <span class="reel-tag">Denim</span>
+          <div class="reel-title">Levi's — Does Country of Origin Matter?</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="reels-more reveal">
+      <a href="https://instagram.com/manityflair" target="_blank" rel="noopener noreferrer" class="btn-primary">Follow @manity_flair</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="about">
+    <div>
+      <div class="footer-brand">Mr <span>C</span></div>
+      <p class="footer-tagline">Teaching men to buy better, one cloth at a time. Based in India. Obsessed with construction, fibre, and the stories fabric carries.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Navigation</div>
+      <ul class="footer-links">
+        <li><a href="#products">The Edit</a></li>
+        <li><a href="#reels">The Journal</a></li>
+        <li><a href="#about">About Mr C</a></li>
+        <li><a href="#">Size Guide</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Follow</div>
+      <ul class="footer-links">
+        <li><a href="https://instagram.com/manityflair" target="_blank" rel="noopener noreferrer">Instagram — @manity_flair</a></li>
+        <li><a href="#">Enquiries</a></li>
+      </ul>
+    </div>
+  </footer>
+  <div class="footer-bottom">
+    <p>© 2026 Mr C — manity_flair. All rights reserved.</p>
+    <p>Crafted with intention.</p>
+  </div>
+
+  <!-- BACK TO TOP -->
+  <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+    <span aria-hidden="true">↑</span>
+  </button>
+
+  <script>
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // ── SCROLL REVEAL ──
+    const reveals = document.querySelectorAll('.reveal');
+    if (prefersReduced) {
+      reveals.forEach(el => el.classList.add('visible'));
+    } else {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      reveals.forEach(el => io.observe(el));
+    }
+
+    // ── SCROLL SPY ──
+    const sections = document.querySelectorAll('section[id], footer[id]');
+    const navAnchors = document.querySelectorAll('.nav-links a[data-section]');
+    const spyObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navAnchors.forEach(a => a.classList.remove('nav-active'));
+          const active = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('nav-active');
+        }
+      });
+    }, { threshold: 0.3, rootMargin: '-80px 0px 0px 0px' });
+    sections.forEach(s => spyObserver.observe(s));
+
+    // ── HAMBURGER MENU ──
+    const navToggle = document.getElementById('nav-toggle');
+    const navDrawer = document.getElementById('nav-drawer');
+    const navDrawerClose = document.getElementById('nav-drawer-close');
+
+    function openDrawer() {
+      navDrawer.classList.add('open');
+      navToggle.setAttribute('aria-expanded', 'true');
+      navDrawer.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      navDrawerClose.focus();
+    }
+
+    function closeDrawer() {
+      navDrawer.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      navDrawer.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      navToggle.focus();
+    }
+
+    navToggle.addEventListener('click', openDrawer);
+    navDrawerClose.addEventListener('click', closeDrawer);
+
+    navDrawer.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', closeDrawer);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navDrawer.classList.contains('open')) closeDrawer();
+    });
+
+    // ── BACK TO TOP ──
+    const btt = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      btt.classList.toggle('visible', window.scrollY > 600);
+    }, { passive: true });
+    btt.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: prefersReduced ? 'instant' : 'smooth' });
+    });
+
+    // ── PARALLAX HERO RIGHT ──
+    if (!prefersReduced) {
+      const heroRight = document.querySelector('.hero-right');
+      const heroHeight = heroRight ? heroRight.parentElement.offsetHeight : 0;
+      window.addEventListener('scroll', () => {
+        if (!heroRight) return;
+        const scrolled = window.scrollY;
+        if (scrolled < heroHeight) {
+          heroRight.style.transform = `translateY(${scrolled * 0.12}px)`;
+        }
+      }, { passive: true });
+    }
+  </script>
+</body>
+</html>
